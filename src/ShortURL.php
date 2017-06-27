@@ -1,6 +1,10 @@
 <?php
 
-class ShortURL extends DataObject
+namespace Dynamic\ShortURL;
+
+use \Hpatoio\Bitly\Client;
+
+class ShortURL extends \DataObject
 {
     /**
      * @var string
@@ -12,6 +16,9 @@ class ShortURL extends DataObject
      */
     private static $plural_name = 'Short URLs';
 
+    /**
+     * @var
+     */
     private $bitly_token;
 
     /**
@@ -76,7 +83,7 @@ class ShortURL extends DataObject
         $fields->dataFieldByName('CampaignContent')
             ->setDescription('Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links that point to the same URL. Examples: logolink or textlink');
 
-        $fields->addFieldToTab('Root.Main', ReadonlyField::create('LongURL', 'Long URL', $this->getLongURL()));
+        $fields->addFieldToTab('Root.Main', \ReadonlyField::create('LongURL', 'Long URL', $this->getLongURL()));
 
         $short = $fields->dataFieldByName('ShortURL');
         $short = $short->performReadonlyTransformation();
@@ -108,6 +115,14 @@ class ShortURL extends DataObject
     }
 
     /**
+     * @return array|\scalar
+     */
+    public function getToken()
+    {
+        return \Config::inst()->get('Dynamic\ShortURL\ShortURL', 'bitly_token');
+    }
+
+    /**
      * @return string
      */
     public function getLongURL()
@@ -130,8 +145,8 @@ class ShortURL extends DataObject
     {
         parent::onBeforeWrite();
 
-        if ($token = Config::inst()->get('ShortURL', 'bitly_token')) {
-            $bitly = new \Hpatoio\Bitly\Client($token);
+        if ($token = $this->getToken()) {
+            $bitly = new Client($token);
 
             $response = $bitly->Shorten([
                 'longUrl' => $this->getLongURL(),

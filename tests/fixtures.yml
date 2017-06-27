@@ -1,0 +1,5 @@
+Dynamic\ShortURL\ShortURL:
+  one:
+    Title: 'Short URL One'
+    URL: 'http://www.dynamicagency.com'
+    CampaignSource: 'social'
