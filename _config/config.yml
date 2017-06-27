@@ -1,0 +1,5 @@
+---
+Name: dynamicshorturlconfig
+---
+ShortURL:
+  bitly_token: ''
