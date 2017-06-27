@@ -1,12 +1,14 @@
 <?php
 
-class ShortURLAdmin extends ModelAdmin
+namespace Dynamic\ShortURL;
+
+class ShortURLAdmin extends \ModelAdmin
 {
     /**
      * @var array
      */
     private static $managed_models = array(
-        'ShortURL',
+        'Dynamic\\ShortURL\\ShortURL',
     );
 
     /**
