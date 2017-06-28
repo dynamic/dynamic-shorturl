@@ -5,8 +5,8 @@ Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 [![Build Status](https://travis-ci.org/dynamic/silverstripe-shorturls.svg?branch=master)](https://travis-ci.org/dynamic/silverstripe-shorturls)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/?branch=master)
-
+[![Build Status](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/build-status/master)
+[![codecov](https://codecov.io/gh/dynamic/silverstripe-shorturls/branch/master/graph/badge.svg)](https://codecov.io/gh/dynamic/silverstripe-shorturls)
 
 ## Requirements
 
