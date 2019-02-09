@@ -1,4 +1,4 @@
-# silverstripe-shorturls
+# Silverstripe Short URLs
 
 Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 
@@ -8,9 +8,14 @@ Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 [![Build Status](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/build-status/master)
 [![codecov](https://codecov.io/gh/dynamic/silverstripe-shorturls/branch/master/graph/badge.svg)](https://codecov.io/gh/dynamic/silverstripe-shorturls)
 
+[![Latest Stable Version](https://poser.pugx.org/dynamic/silverstripe-shorturls/v/stable)](https://packagist.org/packages/dynamic/silverstripe-shorturls)
+[![Total Downloads](https://poser.pugx.org/dynamic/silverstripe-shorturls/downloads)](https://packagist.org/packages/dynamic/silverstripe-shorturls)
+[![Latest Unstable Version](https://poser.pugx.org/dynamic/silverstripe-shorturls/v/unstable)](https://packagist.org/packages/dynamic/silverstripe-shorturls)
+[![License](https://poser.pugx.org/dynamic/silverstripe-shorturls/license)](https://packagist.org/packages/dynamic/silverstripe-shorturls)
+
 ## Requirements
 
-- SilverStripe 3.2
+- SilverStripe ^4.2
 
 ## Installation
 
@@ -24,7 +29,3 @@ In `app/config.yml`:
 ## Example usage
 
 Use the Short URLs model admin to create campaign links, which can be used to track incoming traffic via Google Analytics.
-
-## Documentation
-
-See the [docs/en](docs/en/index.md) folder.
