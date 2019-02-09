@@ -32,9 +32,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
-        "installer-name": "shorturls",
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
+        "installer-name": "shorturls"
     }
 }
