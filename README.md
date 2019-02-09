@@ -21,9 +21,13 @@ Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 
 `composer require dynamic/silverstripe-shorturls`
 
-In `app/config.yml`:
+Create the file `app/myshorturlconfig.yml`:
 
-	Dynamic\ShortURL\Model\ShortURL:
+	---
+    Name: myshorturlconfig
+    After: 'shorturlconfig'
+    ---
+    Dynamic\ShortURL\Model\ShortURL:
       bitly_token: 'your_token_here'
 
 ## Example usage

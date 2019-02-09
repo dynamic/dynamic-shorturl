@@ -165,8 +165,6 @@ class ShortURL extends DataObject
      */
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
-
         if ($token = $this->getToken()) {
             $bitly = new Client($token);
 
@@ -177,5 +175,7 @@ class ShortURL extends DataObject
 
             $this->ShortURL = $response['url'];
         }
+
+        parent::onBeforeWrite();
     }
 }

@@ -5,6 +5,7 @@
 
 **Merged pull requests:**
 
+- update Docs [\#5](https://github.com/dynamic/silverstripe-shorturls/pull/5) ([jsirish](https://github.com/jsirish))
 - refactor - SilverStripe 4.x compatability [\#4](https://github.com/dynamic/silverstripe-shorturls/pull/4) ([jsirish](https://github.com/jsirish))
 
 ## [1.0.0](https://github.com/dynamic/silverstripe-shorturls/tree/1.0.0) (2019-02-09)
