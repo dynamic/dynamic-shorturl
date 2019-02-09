@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\ShortURL\Test;
+namespace Dynamic\ShortURL\Test\Model;
 
 use Dynamic\ShortUR\Model\ShortURL;
 use SilverStripe\Dev\SapphireTest;
