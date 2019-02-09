@@ -1,10 +1,15 @@
 <?php
 
-namespace Dynamic\ShortURL;
+namespace Dynamic\ShortURL\Model;
 
-use \Hpatoio\Bitly\Client;
+use Hpatoio\Bitly\Client;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\ValidationResult;
 
-class ShortURL extends \DataObject
+class ShortURL extends DataObject
 {
     /**
      * @var string
@@ -59,6 +64,11 @@ class ShortURL extends \DataObject
     ];
 
     /**
+     * @var string
+     */
+    private static $table_name = 'ShortURL';
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -69,21 +79,33 @@ class ShortURL extends \DataObject
             ->setDescription('URL to shorten and tag');
 
         $fields->dataFieldByName('CampaignSource')
-            ->setDescription('Use to identify a search engine, newsletter name, or other source. Example: google');
+            ->setDescription(
+                'Use to identify a search engine, newsletter name, or other source. Example: google'
+            );
 
         $fields->dataFieldByName('CampaignMedium')
-            ->setDescription('Use utm_medium to identify a medium such as email or cost-per- click. Example: cpc');
+            ->setDescription(
+                'Use utm_medium to identify a medium such as email or cost-per- click. Example: cpc'
+            );
 
         $fields->dataFieldByName('CampaignName')
-            ->setDescription('Used for keyword analysis. Use utm_campaign to identify a specific product promotion or strategic campaign. Example: utm_campaign=spring_sale');
+            ->setDescription(
+                'Used for keyword analysis. Use utm_campaign to identify a specific product promotion or 
+                strategic campaign. Example: utm_campaign=spring_sale'
+            );
 
         $fields->dataFieldByName('CampaignTerm')
-            ->setDescription('Used for paid search. Use utm_term to note the keywords for this ad. Example: running+shoes');
+            ->setDescription(
+                'Used for paid search. Use utm_term to note the keywords for this ad. Example: running+shoes'
+            );
 
         $fields->dataFieldByName('CampaignContent')
-            ->setDescription('Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links that point to the same URL. Examples: logolink or textlink');
+            ->setDescription(
+                'Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links 
+                that point to the same URL. Examples: logolink or textlink'
+            );
 
-        $fields->addFieldToTab('Root.Main', \ReadonlyField::create('LongURL', 'Long URL', $this->getLongURL()));
+        $fields->addFieldToTab('Root.Main', ReadonlyField::create('LongURL', 'Long URL', $this->getLongURL()));
 
         $short = $fields->dataFieldByName('ShortURL');
         $short = $short->performReadonlyTransformation();
@@ -100,26 +122,26 @@ class ShortURL extends \DataObject
         $result = parent::validate();
 
         if (!$this->Title) {
-            $result->error('A Title is required before you can save');
+            $result->addError('A Title is required before you can save');
         }
 
         if (!$this->URL) {
-            $result->error('A URL is required before you can save');
+            $result->addError('A URL is required before you can save');
         }
 
         if (!$this->CampaignSource) {
-            $result->error('A Campaign Source is required before you can save');
+            $result->addError('A Campaign Source is required before you can save');
         }
 
         return $result;
     }
 
     /**
-     * @return array|\scalar
+     * @return mixed
      */
     public function getToken()
     {
-        return \Config::inst()->get('Dynamic\ShortURL\ShortURL', 'bitly_token');
+        return Config::inst()->get(ShortURL::class, 'bitly_token');
     }
 
     /**

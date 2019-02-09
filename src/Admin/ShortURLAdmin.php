@@ -1,14 +1,17 @@
 <?php
 
-namespace Dynamic\ShortURL;
+namespace Dynamic\ShortURL\Admin;
 
-class ShortURLAdmin extends \ModelAdmin
+use Dynamic\ShortURL\Model\ShortURL;
+use SilverStripe\Admin\ModelAdmin;
+
+class ShortURLAdmin extends ModelAdmin
 {
     /**
      * @var array
      */
     private static $managed_models = array(
-        'Dynamic\\ShortURL\\ShortURL',
+        ShortURL::class,
     );
 
     /**
