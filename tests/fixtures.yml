@@ -1,4 +1,4 @@
-Dynamic\ShortURL\ShortURL:
+Dynamic\ShortURL\Model\ShortURL:
   one:
     Title: 'Short URL One'
     URL: 'http://www.dynamicagency.com'
