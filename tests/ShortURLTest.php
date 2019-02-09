@@ -1,22 +1,25 @@
 <?php
 
-namespace Dynamic\ShortURL\Tests;
+namespace Dynamic\ShortURL\Test;
 
-class ShortURLTest extends \SapphireTest
+use Dynamic\ShortUR\Model\ShortURL;
+use SilverStripe\Dev\SapphireTest;
+
+class ShortURLTest extends SapphireTest
 {
     /**
      * @var array
      */
-    protected static $fixture_file = array(
-        'shorturls/tests/fixtures.yml',
-    );
+    protected static $fixture_file = [
+        '../fixtures.yml',
+    ];
 
     /**
      *
      */
     public function testGetCMSFields()
     {
-        $object = $this->objFromFixture('Dynamic\\ShortURL\\ShortURL', 'one');
+        $object = $this->objFromFixture(ShortURL::class, 'one');
         $fields = $object->getCMSFields();
         $this->assertInstanceOf('FieldList', $fields);
     }
@@ -26,19 +29,19 @@ class ShortURLTest extends \SapphireTest
      */
     public function testGetValidate()
     {
-        $object = $this->objFromFixture('Dynamic\\ShortURL\\ShortURL', 'one');
+        $object = $this->objFromFixture(ShortURL::class, 'one');
         $object->Title = '';
-        $this->setExpectedException('ValidationException');
+        $this->expectException('ValidationException');
         $object->write();
 
-        $this->objFromFixture('Dynamic\\ShortURL\\ShortURL', 'one');
+        $this->objFromFixture(ShortURL::class, 'one');
         $object->URL = '';
-        $this->setExpectedException('ValidationException');
+        $this->expectException('ValidationException');
         $object->write();
 
-        $this->objFromFixture('Dynamic\\ShortURL\\ShortURL', 'one');
+        $this->objFromFixture(ShortURL::class, 'one');
         $object->CampaignSource = '';
-        $this->setExpectedException('ValidationException');
+        $this->expectException('ValidationException');
         $object->write();
     }
 
@@ -47,7 +50,7 @@ class ShortURLTest extends \SapphireTest
      */
     function testGetLongURL()
     {
-        $object = $this->objFromFixture('Dynamic\\ShortURL\\ShortURL', 'one');
+        $object = $this->objFromFixture(ShortURL::class, 'one');
         $expected = $object->URL . '?utm_source=' . $object->CampaignSource;
         $this->assertEquals($expected, $object->getLongURL());
     }
