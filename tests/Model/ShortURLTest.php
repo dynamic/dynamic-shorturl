@@ -2,8 +2,10 @@
 
 namespace Dynamic\ShortURL\Test\Model;
 
-use Dynamic\ShortUR\Model\ShortURL;
+use Dynamic\ShortURL\Model\ShortURL;
 use SilverStripe\Dev\SapphireTest;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ValidationException;
 
 class ShortURLTest extends SapphireTest
 {
@@ -21,7 +23,7 @@ class ShortURLTest extends SapphireTest
     {
         $object = $this->objFromFixture(ShortURL::class, 'one');
         $fields = $object->getCMSFields();
-        $this->assertInstanceOf('FieldList', $fields);
+        $this->assertInstanceOf(FieldList::class, $fields);
     }
 
     /**
@@ -31,24 +33,24 @@ class ShortURLTest extends SapphireTest
     {
         $object = $this->objFromFixture(ShortURL::class, 'one');
         $object->Title = '';
-        $this->expectException('ValidationException');
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $this->objFromFixture(ShortURL::class, 'one');
         $object->URL = '';
-        $this->expectException('ValidationException');
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $this->objFromFixture(ShortURL::class, 'one');
         $object->CampaignSource = '';
-        $this->expectException('ValidationException');
+        $this->expectException(ValidationException::class);
         $object->write();
     }
 
     /**
      *
      */
-    function testGetLongURL()
+    public function testGetLongURL()
     {
         $object = $this->objFromFixture(ShortURL::class, 'one');
         $expected = $object->URL . '?utm_source=' . $object->CampaignSource;

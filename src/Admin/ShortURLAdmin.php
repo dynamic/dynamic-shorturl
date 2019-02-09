@@ -2,7 +2,7 @@
 
 namespace Dynamic\ShortURL\Admin;
 
-use Dynamic\ShortUR\Model\ShortURL;
+use Dynamic\ShortURL\Model\ShortURL;
 use SilverStripe\Admin\ModelAdmin;
 
 class ShortURLAdmin extends ModelAdmin

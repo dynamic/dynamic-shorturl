@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\ShortUR\Model;
+namespace Dynamic\ShortURL\Model;
 
 use Hpatoio\Bitly\Client;
 use SilverStripe\Core\Config\Config;
