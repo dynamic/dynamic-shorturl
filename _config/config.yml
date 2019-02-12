@@ -3,3 +3,7 @@ Name: shorturlconfig
 ---
 Dynamic\ShortURL\Model\ShortURL:
   bitly_token: ''
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - Dynamic\ShortURL\ORM\SiteTreeDataExtension
