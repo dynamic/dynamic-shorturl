@@ -1,10 +1,27 @@
 # Change Log
 
+## [2.0.2](https://github.com/dynamic/silverstripe-shorturls/tree/2.0.2) (2019-05-16)
+[Full Changelog](https://github.com/dynamic/silverstripe-shorturls/compare/2.0.1...2.0.2)
+
+**Merged pull requests:**
+
+- initial i18n [\#11](https://github.com/dynamic/silverstripe-shorturls/pull/11) ([jsirish](https://github.com/jsirish))
+- remove SiteTreeDataExtension from default config [\#10](https://github.com/dynamic/silverstripe-shorturls/pull/10) ([jsirish](https://github.com/jsirish))
+
+## [2.0.1](https://github.com/dynamic/silverstripe-shorturls/tree/2.0.1) (2019-02-12)
+[Full Changelog](https://github.com/dynamic/silverstripe-shorturls/compare/2.0.0...2.0.1)
+
+**Merged pull requests:**
+
+- refactor - add ShortURLs to SiteTree [\#8](https://github.com/dynamic/silverstripe-shorturls/pull/8) ([jsirish](https://github.com/jsirish))
+- add missing vendor module requirement [\#7](https://github.com/dynamic/silverstripe-shorturls/pull/7) ([jsirish](https://github.com/jsirish))
+
 ## [2.0.0](https://github.com/dynamic/silverstripe-shorturls/tree/2.0.0) (2019-02-09)
 [Full Changelog](https://github.com/dynamic/silverstripe-shorturls/compare/1.0.0...2.0.0)
 
 **Merged pull requests:**
 
+- readme - update config instructions [\#6](https://github.com/dynamic/silverstripe-shorturls/pull/6) ([jsirish](https://github.com/jsirish))
 - update Docs [\#5](https://github.com/dynamic/silverstripe-shorturls/pull/5) ([jsirish](https://github.com/jsirish))
 - refactor - SilverStripe 4.x compatability [\#4](https://github.com/dynamic/silverstripe-shorturls/pull/4) ([jsirish](https://github.com/jsirish))
 
