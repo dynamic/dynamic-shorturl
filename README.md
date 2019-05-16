@@ -33,3 +33,14 @@ Create the file `app/myshorturlconfig.yml`:
 ## Example usage
 
 Use the Short URLs model admin to create campaign links, which can be used to track incoming traffic via Google Analytics.
+
+## Optional Configuration
+
+If you'd like to include a "Share" tab on pages, add the following to your config.yml:
+
+```
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - Dynamic\ShortURL\ORM\SiteTreeDataExtension
+
+```
