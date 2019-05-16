@@ -1,0 +1,9 @@
+en:
+  Dynamic\ShortURL\Admin\ShortURLAdmin:
+    MENUTITLE: 'Short URLs'
+  Dynamic\ShortURL\Model\ShortURL:
+    PLURALNAME: 'Short URLs'
+    PLURALS:
+      one: 'A Short URL'
+      other: '{count} Short URLs'
+    SINGULARNAME: 'Short URL'
