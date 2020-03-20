@@ -2,7 +2,8 @@
 
 namespace Dynamic\ShortURL\Model;
 
-use Hpatoio\Bitly\Client;
+use PHPLicengine\Api\Api;
+use PHPLicengine\Service\Bitlink;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
@@ -90,7 +91,7 @@ class ShortURL extends DataObject
 
         $fields->dataFieldByName('CampaignName')
             ->setDescription(
-                'Used for keyword analysis. Use utm_campaign to identify a specific product promotion or 
+                'Used for keyword analysis. Use utm_campaign to identify a specific product promotion or
                 strategic campaign. Example: utm_campaign=spring_sale'
             );
 
@@ -101,7 +102,7 @@ class ShortURL extends DataObject
 
         $fields->dataFieldByName('CampaignContent')
             ->setDescription(
-                'Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links 
+                'Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links
                 that point to the same URL. Examples: logolink or textlink'
             );
 
@@ -154,10 +155,31 @@ class ShortURL extends DataObject
             'utm_medium' => $this->CampaignMedium,
             'utm_campaign' => $this->CampaignName,
             'utm_term' => $this->CampaignTerm,
-            'utm_content' => $this->CampaignTerm,
+            'utm_content' => $this->CampaignContent,
         ];
         $LongURL = $this->URL . '?' . http_build_query($vars);
         return $LongURL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLinkChanged()
+    {
+        $isChanged = false;
+
+        if (
+            $this->isChanged('URL', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignMedium', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignName', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignTerm', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignContent', self::CHANGE_VALUE)
+        ) {
+            $isChanged = true;
+        }
+
+        $this->extend('updateIsLinkChanged', $isChanged);
+        return $isChanged;
     }
 
     /**
@@ -165,15 +187,39 @@ class ShortURL extends DataObject
      */
     public function onBeforeWrite()
     {
-        if ($token = $this->getToken()) {
-            $bitly = new Client($token);
+        // do not call api if link is not changed
+        if (!$this->getLinkChanged()) {
+            return parent::onBeforeWrite();
+        }
 
-            $response = $bitly->Shorten([
-                'longUrl' => $this->getLongURL(),
-                'format' => 'txt'
+        if ($token = $this->getToken()) {
+            $api = new Api($token);
+            $bitlink = new Bitlink($api);
+
+            $result = $bitlink->createBitlink([
+                'long_url' => $this->getLongURL()
             ]);
 
-            $this->ShortURL = $response['url'];
+            // if cURL error occurs.
+            if ($api->isCurlError()) {
+                throw new \Exception($api->getCurlErrno().': '.$api->getCurlError());
+
+            } else {
+                // if Bitly response contains error message.
+                if ($result->isError()) {
+                    throw new \Exception($result->getDescription());
+
+                } else {
+
+                    // if Bitly response is 200 or 201
+                    if ($result->isSuccess()) {
+                        $this->ShortURL = $result->getResponseArray()['link'];
+
+                    } else {
+                        throw new \Exception($result->getResponse());
+                    }
+                }
+            }
         }
 
         parent::onBeforeWrite();
