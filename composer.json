@@ -20,7 +20,7 @@
     "require": {
         "silverstripe/recipe-cms": "^4.0@dev",
         "silverstripe/vendor-plugin": "^1@dev",
-        "phplicengine/bitly": "^1.0"
+        "guzzlehttp/guzzle": "^6"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",

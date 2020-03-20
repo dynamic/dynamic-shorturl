@@ -2,8 +2,7 @@
 
 namespace Dynamic\ShortURL\Model;
 
-use PHPLicengine\Api\Api;
-use PHPLicengine\Service\Bitlink;
+use GuzzleHttp\Client;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
@@ -21,11 +20,6 @@ class ShortURL extends DataObject
      * @var string
      */
     private static $plural_name = 'Short URLs';
-
-    /**
-     * @var
-     */
-    private $bitly_token;
 
     /**
      * @var array
@@ -146,6 +140,14 @@ class ShortURL extends DataObject
     }
 
     /**
+     * @return mixed
+     */
+    public function getDomain()
+    {
+        return Config::inst()->get(ShortURL::class, 'bitly_domain');
+    }
+
+    /**
      * @return string
      */
     public function getLongURL()
@@ -193,33 +195,35 @@ class ShortURL extends DataObject
         }
 
         if ($token = $this->getToken()) {
-            $api = new Api($token);
-            $bitlink = new Bitlink($api);
-
-            $result = $bitlink->createBitlink([
-                'long_url' => $this->getLongURL()
+            $client = new Client([
+                'base_uri' => 'https://api-ssl.bitly.com/v4/',
+                'timeout' => $this->config()->get('timeout'),
+                'http_errors' => false,
+                'verify' => true,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->getToken(),
+                    'Content-Type' => 'application/json',
+                ],
             ]);
 
-            // if cURL error occurs.
-            if ($api->isCurlError()) {
-                throw new \Exception($api->getCurlErrno().': '.$api->getCurlError());
+            $data = [
+                'long_url' => $this->getLongURL(),
+            ];
 
-            } else {
-                // if Bitly response contains error message.
-                if ($result->isError()) {
-                    throw new \Exception($result->getDescription());
-
-                } else {
-
-                    // if Bitly response is 200 or 201
-                    if ($result->isSuccess()) {
-                        $this->ShortURL = $result->getResponseArray()['link'];
-
-                    } else {
-                        throw new \Exception($result->getResponse());
-                    }
-                }
+            if ($domain = $this->getDomain()) {
+                $data['domain'] = $domain;
             }
+
+            $response = $client->post('shorten', [
+                'json' => $data,
+            ]);
+
+            $responseData = json_decode($response->getBody(), true);
+            if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
+                throw new \Exception($responseData['message'] . ' : ' . $responseData['description']);
+            }
+
+            $this->ShortURL = $responseData['link'];
         }
 
         parent::onBeforeWrite();
