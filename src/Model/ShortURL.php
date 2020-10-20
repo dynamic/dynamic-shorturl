@@ -2,7 +2,7 @@
 
 namespace Dynamic\ShortURL\Model;
 
-use Hpatoio\Bitly\Client;
+use GuzzleHttp\Client;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
@@ -20,11 +20,6 @@ class ShortURL extends DataObject
      * @var string
      */
     private static $plural_name = 'Short URLs';
-
-    /**
-     * @var
-     */
-    private $bitly_token;
 
     /**
      * @var array
@@ -90,7 +85,7 @@ class ShortURL extends DataObject
 
         $fields->dataFieldByName('CampaignName')
             ->setDescription(
-                'Used for keyword analysis. Use utm_campaign to identify a specific product promotion or 
+                'Used for keyword analysis. Use utm_campaign to identify a specific product promotion or
                 strategic campaign. Example: utm_campaign=spring_sale'
             );
 
@@ -101,7 +96,7 @@ class ShortURL extends DataObject
 
         $fields->dataFieldByName('CampaignContent')
             ->setDescription(
-                'Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links 
+                'Used for A/B testing and content-targeted ads. Use utm_content to differentiate ads or links
                 that point to the same URL. Examples: logolink or textlink'
             );
 
@@ -145,6 +140,14 @@ class ShortURL extends DataObject
     }
 
     /**
+     * @return mixed
+     */
+    public function getDomain()
+    {
+        return Config::inst()->get(ShortURL::class, 'bitly_domain');
+    }
+
+    /**
      * @return string
      */
     public function getLongURL()
@@ -154,10 +157,31 @@ class ShortURL extends DataObject
             'utm_medium' => $this->CampaignMedium,
             'utm_campaign' => $this->CampaignName,
             'utm_term' => $this->CampaignTerm,
-            'utm_content' => $this->CampaignTerm,
+            'utm_content' => $this->CampaignContent,
         ];
         $LongURL = $this->URL . '?' . http_build_query($vars);
         return $LongURL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLinkChanged()
+    {
+        $isChanged = false;
+
+        if (
+            $this->isChanged('URL', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignMedium', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignName', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignTerm', self::CHANGE_VALUE) ||
+            $this->isChanged('CampaignContent', self::CHANGE_VALUE)
+        ) {
+            $isChanged = true;
+        }
+
+        $this->extend('updateIsLinkChanged', $isChanged);
+        return $isChanged;
     }
 
     /**
@@ -165,15 +189,41 @@ class ShortURL extends DataObject
      */
     public function onBeforeWrite()
     {
-        if ($token = $this->getToken()) {
-            $bitly = new Client($token);
+        // do not call api if link is not changed
+        if (!$this->getLinkChanged()) {
+            return parent::onBeforeWrite();
+        }
 
-            $response = $bitly->Shorten([
-                'longUrl' => $this->getLongURL(),
-                'format' => 'txt'
+        if ($token = $this->getToken()) {
+            $client = new Client([
+                'base_uri' => 'https://api-ssl.bitly.com/v4/',
+                'timeout' => $this->config()->get('timeout'),
+                'http_errors' => false,
+                'verify' => true,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->getToken(),
+                    'Content-Type' => 'application/json',
+                ],
             ]);
 
-            $this->ShortURL = $response['url'];
+            $data = [
+                'long_url' => $this->getLongURL(),
+            ];
+
+            if ($domain = $this->getDomain()) {
+                $data['domain'] = $domain;
+            }
+
+            $response = $client->post('shorten', [
+                'json' => $data,
+            ]);
+
+            $responseData = json_decode($response->getBody(), true);
+            if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
+                throw new \Exception($responseData['message'] . ' : ' . $responseData['description']);
+            }
+
+            $this->ShortURL = $responseData['link'];
         }
 
         parent::onBeforeWrite();
