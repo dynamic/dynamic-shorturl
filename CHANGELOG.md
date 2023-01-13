@@ -1,5 +1,15 @@
 # Change Log
 
+## [3.0.0](https://github.com/dynamic/silverstripe-shorturls/tree/3.0.0) (2021-01-13)
+* swapped out bitly module by @mak001 in https://github.com/dynamic/silverstripe-shorturls/pull/13
+* CI update workflow by @jsirish in https://github.com/dynamic/silverstripe-shorturls/pull/14
+* README update, phpcs by @jsirish in https://github.com/dynamic/silverstripe-shorturls/pull/15
+
+## New Contributors
+* @mak001 made their first contribution in https://github.com/dynamic/silverstripe-shorturls/pull/13
+
+**Full Changelog**: https://github.com/dynamic/silverstripe-shorturls/compare/2.0.2...3.0.0
+
 ## [2.0.2](https://github.com/dynamic/silverstripe-shorturls/tree/2.0.2) (2019-05-16)
 [Full Changelog](https://github.com/dynamic/silverstripe-shorturls/compare/2.0.1...2.0.2)
 
