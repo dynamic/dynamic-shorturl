@@ -2,10 +2,7 @@
 
 Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 
-[![Build Status](https://travis-ci.org/dynamic/silverstripe-shorturls.svg?branch=master)](https://travis-ci.org/dynamic/silverstripe-shorturls)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-shorturls/build-status/master)
+[![CI](https://github.com/dynamic/silverstripe-shorturls/actions/workflows/ci.yml/badge.svg)](https://github.com/dynamic/silverstripe-shorturls/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/dynamic/silverstripe-shorturls/branch/master/graph/badge.svg)](https://codecov.io/gh/dynamic/silverstripe-shorturls)
 
 [![Latest Stable Version](https://poser.pugx.org/dynamic/silverstripe-shorturls/v/stable)](https://packagist.org/packages/dynamic/silverstripe-shorturls)
@@ -15,7 +12,8 @@ Create short URLs via Bit.ly, tagged with Google Analytics Campaign data.
 
 ## Requirements
 
-- SilverStripe ^4.2
+- SilverStripe 4
+- guzzlehttp/guzzle ^7.4
 
 ## Installation
 
@@ -30,17 +28,27 @@ Create the file `app/myshorturlconfig.yml`:
     Dynamic\ShortURL\Model\ShortURL:
       bitly_token: 'your_token_here'
 
-## Example usage
+## Usage
 
 Use the Short URLs model admin to create campaign links, which can be used to track incoming traffic via Google Analytics.
 
-## Optional Configuration
+## Maintainers
 
-If you'd like to include a "Share" tab on pages, add the following to your config.yml:
+*  [Dynamic](https://www.dynamicagency.com) (<dev@dynamicagency.com>)
 
-```
-SilverStripe\CMS\Model\SiteTree:
-  extensions:
-    - Dynamic\ShortURL\ORM\SiteTreeDataExtension
+## Bugtracker
+Bugs are tracked in the issues section of this repository. Before submitting an issue please read over
+existing issues to ensure yours is unique.
 
-```
+If the issue does look like a new bug:
+
+- Create a new issue
+- Describe the steps required to reproduce your issue, and the expected outcome. Unit tests, screenshots
+  and screencasts can help here.
+- Describe your environment as detailed as possible: SilverStripe version, Browser, PHP version,
+  Operating System, any installed SilverStripe modules.
+
+Please report security issues to the module maintainers directly. Please don't file security issues in the bugtracker.
+
+## Development and contribution
+If you would like to make contributions to the module please ensure you raise a pull request and discuss with the module maintainers.

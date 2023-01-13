@@ -170,8 +170,7 @@ class ShortURL extends DataObject
     {
         $isChanged = false;
 
-        if (
-            $this->isChanged('URL', self::CHANGE_VALUE) ||
+        if ($this->isChanged('URL', self::CHANGE_VALUE) ||
             $this->isChanged('CampaignMedium', self::CHANGE_VALUE) ||
             $this->isChanged('CampaignName', self::CHANGE_VALUE) ||
             $this->isChanged('CampaignTerm', self::CHANGE_VALUE) ||
