@@ -13,7 +13,7 @@ class ShortURLTest extends SapphireTest
      * @var array
      */
     protected static $fixture_file = [
-        '../fixtures.yml',
+        'fixtures.yml',
     ];
 
     /**
