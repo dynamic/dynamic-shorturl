@@ -19,7 +19,7 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^7.4",
-        "silverstripe/recipe-cms": "^4.0",
+        "silverstripe/recipe-core": "^4.0",
         "silverstripe/vendor-plugin": "^1.0"
     },
     "require-dev": {
