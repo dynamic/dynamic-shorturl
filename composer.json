@@ -20,7 +20,7 @@
     "require": {
         "guzzlehttp/guzzle": "^7.4",
         "silverstripe/recipe-core": "^4.0",
-        "silverstripe/vendor-plugin": "^1.0"
+        "silverstripe/vendor-plugin": "^1.0 || ^2.0"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^2"
